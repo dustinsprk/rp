@@ -13,8 +13,9 @@ import (
 )
 
 func main() {
-	reader, err := os.Open("testdata/photo.jpg")
-	outName := "testdata/output.jpg"
+	inName := "snow"
+	reader, err := os.Open(fmt.Sprintf("testdata/%s.jpg", inName))
+	outName := fmt.Sprintf("testdata/%s_out.jpg", inName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,8 +29,7 @@ func main() {
 	out, err := os.Create(outName)
 	defer out.Close()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
 	fuckItUp(m, outImg)
 	jpeg.Encode(out, outImg, nil)
@@ -81,7 +81,7 @@ func genCryptoRng(nOpts int64) func() uint8 {
 	return func() uint8 {
 		bn, err := cr.Int(cr.Reader, max)
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 		return uint8(bn.Int64())
 	}
