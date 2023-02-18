@@ -24,15 +24,15 @@ func main() {
 		log.Fatal(err)
 	}
 	bounds := m.Bounds()
-	img := image.NewRGBA(bounds)
+	outImg := image.NewRGBA(bounds)
 	out, err := os.Create(outName)
 	defer out.Close()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	f(m, img)
-	jpeg.Encode(out, img, nil)
+	fuckItUp(m, outImg)
+	jpeg.Encode(out, outImg, nil)
 }
 
 type ColorGenerator struct {
@@ -87,7 +87,7 @@ func genCryptoRng(nOpts int64) func() uint8 {
 	}
 }
 
-func f(img image.Image, out *image.RGBA) {
+func fuckItUp(img image.Image, out *image.RGBA) {
 	cg := NewColorGenerator()
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
